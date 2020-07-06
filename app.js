@@ -3,18 +3,26 @@ var HEIGHT = window.innerHeight;
 
 var renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(WIDTH, HEIGHT);
+renderer.setPixelRatio( window.devicePixelRatio );
+renderer.gammaFactor = 2.2;
+renderer.gammaOutput = true;
 renderer.setClearColor(0xDDDDDD, 1);
 document.body.appendChild(renderer.domElement);
 
 var scene = new THREE.Scene();
 
-var camera = new THREE.PerspectiveCamera(70, WIDTH/HEIGHT);
-camera.position.z = 50;
+var camera = new THREE.PerspectiveCamera(70, WIDTH/HEIGHT, 0.1, 100);
+camera.position.set(0, 0, 50);
 scene.add(camera);
 
 var boxGeometry = new THREE.BoxGeometry(10, 10, 10);
-var basicMaterial = new THREE.MeshBasicMaterial({color: 0x0095DD});
-var cube = new THREE.Mesh(boxGeometry, basicMaterial);
+var textureLoader = new THREE.TextureLoader();
+var texture = textureLoader.load( 'phone.png' );
+texture.encoding = THREE.sRGBEncoding;
+var material = new THREE.MeshStandardMaterial( {
+  map: texture,
+} );
+var cube = new THREE.Mesh(boxGeometry, material);
 scene.add(cube);
 cube.rotation.set(0.4, 0.2, 0);
 cube.position.x = -25;
@@ -30,7 +38,7 @@ var dodecahedron = new THREE.Mesh(dodecahedronGeometry, lambertMaterial);
 dodecahedron.position.x = 25;
 scene.add(dodecahedron);
 
-var light = new THREE.DirectionalLight( 0xffffff, 5.0 );
+var light = new THREE.DirectionalLight( 0xffffff, 3.0 );
 light.position.set( 0, 70, 70 );
 scene.add(light);
 
@@ -55,5 +63,29 @@ function stop() {
   renderer.setAnimationLoop( null );
 
 }
+
+var isPlaying = true;
+
+function onWindowResize() {
+  WIDTH = window.innerWidth;
+  HEIGHT = window.innerHeight;
+
+  camera.aspect = WIDTH / HEIGHT;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize( WIDTH, HEIGHT );
+
+  isPlaying = !isPlaying;
+  if(isPlaying) {
+    play();
+  }
+  else {
+    renderer.render(scene, camera);
+    stop();
+  }
+
+}
+
+window.addEventListener( 'resize', onWindowResize );
 
 play();
