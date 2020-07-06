@@ -45,7 +45,7 @@ var mainLight = new THREE.DirectionalLight( 0xffffff, 1 );
 mainLight.position.set( 10, 10, 100 );
 scene.add( ambientLight, mainLight );
 
-var controls = new THREE.OrbitControls( camera );
+var controls = new THREE.OrbitControls( camera, document.body );
 
 var t = 0;
 
