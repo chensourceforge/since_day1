@@ -43,8 +43,8 @@
   dodecahedron.position.x = 25;
   scene.add(dodecahedron);
 
-  var light = new THREE.PointLight(0xFFFFFF);
-  light.position.set(-10, 15, 50);
+  var light = new THREE.DirectionalLight( 0xffffff, 5.0 );
+  light.position.set( 10, 10, 10 );
   scene.add(light);
 
   var t = 0;
