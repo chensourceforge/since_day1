@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>MDN Games: Three.js demo</title>
+  <title>Test</title>
   <style>
     body { margin: 0; padding: 0; }
     canvas { width: 100%; height: 100%; }
@@ -33,7 +33,7 @@
   cube.position.x = -25;
 
   var torusGeometry = new THREE.TorusGeometry(7, 1, 6, 12);
-  var phongMaterial = new THREE.MeshPhongMaterial({color: 0xFF9500});
+  var phongMaterial = new THREE.MeshStandardMaterial({color: 0xFF9500});
   var torus = new THREE.Mesh(torusGeometry, phongMaterial);
   scene.add(torus);
 
