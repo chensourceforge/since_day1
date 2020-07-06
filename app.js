@@ -4,8 +4,6 @@ var HEIGHT = window.innerHeight;
 var renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(WIDTH, HEIGHT);
 renderer.setPixelRatio( window.devicePixelRatio );
-renderer.gammaFactor = 2.2;
-renderer.gammaOutput = true;
 renderer.setClearColor(0xDDDDDD, 1);
 document.body.appendChild(renderer.domElement);
 
@@ -38,9 +36,16 @@ var dodecahedron = new THREE.Mesh(dodecahedronGeometry, lambertMaterial);
 dodecahedron.position.x = 25;
 scene.add(dodecahedron);
 
-var light = new THREE.DirectionalLight( 0xffffff, 3.0 );
-light.position.set( 0, 70, 70 );
-scene.add(light);
+var ambientLight = new THREE.HemisphereLight(
+  0xddeeff, // sky color
+  0x202020, // ground color
+  5, // intensity
+);
+var mainLight = new THREE.DirectionalLight( 0xffffff, 1 );
+mainLight.position.set( 10, 10, 100 );
+scene.add( ambientLight, mainLight );
+
+var controls = new THREE.OrbitControls( camera );
 
 var t = 0;
 
